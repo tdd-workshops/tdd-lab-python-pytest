@@ -1,5 +1,7 @@
 # Python - Bootstrapping pytest Test Suite
 
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/tdd-workshops/tdd-lab-python-pytest)
+
 *__Note__: This guide assumes you have Python installed.*
 
 1. Install [pipenv]
