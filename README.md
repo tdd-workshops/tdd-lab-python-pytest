@@ -18,10 +18,15 @@ Pick whichever option is easiest for you:
    repository; they pick up `.devcontainer/devcontainer.json` automatically.
 
 The first time the container starts, `make install-dependencies` runs
-automatically (via `postCreateCommand`) and installs the pinned packages from
-`requirements.txt`.
+automatically (via `postCreateCommand`). It creates a `.venv` virtual
+environment in the workspace and installs the pinned packages from
+`requirements.txt` into it. VS Code automatically picks up the workspace
+`.venv` as the project interpreter, so IntelliSense, terminals and the Test
+Explorer all use it without extra setup.
 
 ## Running the tests
+
+From a terminal inside the dev container (`.venv` is activated automatically):
 
 ```shell
 pytest

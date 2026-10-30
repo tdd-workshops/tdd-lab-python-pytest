@@ -13,7 +13,7 @@
         "editor.formatOnSave": true,
         "editor.tabSize": 2,
         "editor.renderWhitespace": "all",
-        "python.defaultInterpreterPath": "/usr/local/python/current/bin/python",
+        "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
         "python.testing.pytestEnabled": true
       },
       "extensions": [
