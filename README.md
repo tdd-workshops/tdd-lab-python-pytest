@@ -37,7 +37,7 @@ You should see something like this:
 
 ```shell
 ============================= test session starts ==============================
-platform linux -- Python 3.12.7, pytest-8.3.3, pluggy-1.5.0
+platform linux -- Python 3.12.7, pytest-9.2.0, pluggy-1.7.0
 rootdir: /workspaces/tdd-lab-python-pytest
 collected 1 item
 
