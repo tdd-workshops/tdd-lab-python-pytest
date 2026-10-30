@@ -1,64 +1,79 @@
 # Python - Bootstrapping pytest Test Suite
 
-*__Note__: This guide assumes you have Python installed.*
+This project is ready to go in a [dev container](https://containers.dev/), so you
+don't need Python (or pipenv) installed on your machine at all — the
+[ghcr.io/tdd-workshops/devcontainer-python](https://ghcr.io/tdd-workshops/devcontainer-python)
+image provides everything needed.
 
-1. Install [pipenv]
+## Getting started
 
-   ```shell
-   pip install pipenv
-   ```
+Pick whichever option is easiest for you:
 
-2. Create a new project folder for the code:
+1. **GitHub Codespaces** — on GitHub, click **Code → Create codespace on main**.
 
-   (*Assuming the project is named `new_kata`*)
+2. **VS Code** — install the [Dev Containers] extension, open this folder and
+   run **Dev Containers: Reopen in Container**.
 
-   ```shell
-   mkdir new_kata
-   cd new_kata
-   ```
+3. **Other dev container compatible tools** (Gitpod, Cursor, etc.) — open this
+   repository; they pick up `.devcontainer/devcontainer.json` automatically.
 
-3. In the new project folder, install pytest as a development dependency
+The first time the container starts, `make install-dependencies` runs
+automatically (via `postCreateCommand`) and installs the pinned packages from
+`requirements.txt`.
 
-   ```shell
-   pipenv install --dev pytest
-   ```
+## Running the tests
 
-4. Create a test file (`test_sum.py`) with the following content:
+```shell
+pytest
+```
 
-   ```python
-   from sum import sum
+or:
 
+```shell
+make test
+```
 
-   class TestSum:
-       def test_additions_are_additive(self):
-           assert sum(1, 1)  == 2, "expected two numbers to add up"
-   ```
+You should see something like this:
 
-4. Create `sum.py` with the following content:
+```shell
+============================= test session starts ==============================
+platform linux -- Python 3.12.7, pytest-8.3.3, pluggy-1.5.0
+rootdir: /workspaces/tdd-lab-python-pytest
+collected 1 item
 
-   ```python
-   def sum(a, b):
-       return a + b
-   ```
+test_sum.py .                                                            [100%]
 
-5. Run the test:
+============================== 1 passed in 0.02s ===============================
+```
 
-  ```shell
-  pipenv run pytest
+Run `make help` to see all available targets.
+
+## Project layout
+
+- `sum.py` — the code under test:
+
+  ```python
+  class Sum:
+      def addition(self, a, b):
+          return a + b
   ```
 
-  You should see this:
+- `test_sum.py` — the test suite:
 
-  ```shell
-  === test session starts ===
-  platform darwin -- Python 3.6.1, pytest-4.4.1, py-1.8.0, pluggy-0.11.0
-  rootdir: /Users/ba/workspace/coding_dojo
-  collected 1 item
+  ```python
+  from sum import Sum
 
-  test_sum.py .             [100%]
 
-  === 1 passed in 0.02 seconds ===
+  class TestSum:
+      def test_additions_are_additive(self):
+          sum = Sum()
+          assert sum.addition(1, 1) == 2, "expected two numbers to add up"
   ```
+
+- `requirements.txt` — pinned dependencies, installed with
+  `make install-dependencies`
+- `Makefile` — common tasks (`make help`)
+- `.devcontainer/devcontainer.json` — dev container configuration
 
 ## About pytest
 
@@ -75,36 +90,31 @@ def test_failing_lists(self):
 will give you the following output:
 
 ```shell
-=== test session starts ===
-platform darwin -- Python 3.6.1, pytest-4.4.1, py-1.8.0, pluggy-0.11.0
-rootdir: /Users/ba/workspace/coding_dojo
-collected 2 items
-
-test_sum.py .F [100%]
-
-=== FAILURES ===
-___ TestSum.test_failing_lists ___
+=================================== FAILURES ===================================
+_________________________ TestSum.test_failing_lists _________________________
 
 self = <test_sum.TestSum object at 0x10205c8d0>
 
     def test_failing_lists(self):
 >       assert [1] == [1, 2]
 E       assert [1] == [1, 2]
-E         Right contains more items, first extra item: 2
-E         Use -v to get the full diff
+E         Right contains one more item: 2
+E         Use -v to get more diff
 
 test_sum.py:9: AssertionError
-=== 1 failed, 1 passed in 0.06 seconds ===
+=========================== short test summary info ============================
+FAILED test_sum.py::TestSum::test_failing_lists
+========================= 1 failed, 1 passed in 0.06s =========================
 ```
 
-## About pipenv
+## About dev containers
 
-Pipenv is a tool for managing all your dependencies and helping you make sure
-the correct version of them is installed everywhere (it's similar to Ruby's
-`bundler`). It will under the hood create a [virtual environment
-(venv/virtualenv)] for you and keep all of your current project's dependencies
-separate from any other app. To learn more about pipenv check out the
-[website][pipenv].
+Dev containers standardise a project's development environment in a
+`.devcontainer/devcontainer.json` file at the root of the repository. Any tool
+that understands the [dev container spec](https://containers.dev/) — VS Code,
+GitHub Codespaces, Gitpod, and others — will build or reuse the same container
+image, so every participant in a workshop gets an identical setup. The old
+pipenv/Gitpod-specific configuration has been replaced by this single,
+portable definition.
 
-[pipenv]: https://pipenv.readthedocs.io/en/latest/
-[virtualenv]: https://virtualenv.pypa.io/en/stable/
+[Dev Containers]: https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers
