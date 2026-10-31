@@ -47,6 +47,8 @@ Run `make help` to see all available targets.
 
 - `gilded_rose.py` — the legacy `GildedRose` code and the `Item` model
 - `test_gilded_rose.py` — the starting pytest test
+- `test_gilded_rose_characterisation.py` — the 30-day golden-master test
+- `texttests/ThirtyDays/stdout.gr` — the expected characterisation test output
 - `GildedRoseRequirements.md` — the kata requirements
 - `requirements.txt` — pinned Python dependencies
 - `Makefile` — dependency installation and test tasks
